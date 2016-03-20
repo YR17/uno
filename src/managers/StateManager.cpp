@@ -17,6 +17,13 @@ void StateManager::pop(){
 	states.pop();
 }
 
+void StateManager::clear(){
+	while(states.size()){
+		delete states.top();
+		states.pop();
+	}
+}
+
 void StateManager::draw(){
 	if(states.size())states.top()->draw();
 }

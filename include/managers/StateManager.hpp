@@ -11,6 +11,7 @@
 		static StateManager *getInst();
 		void push(State*);
 		void pop();
+		void clear();
 		void draw();
 		void event(sf::Event);
 		void tick(sf::Time);
