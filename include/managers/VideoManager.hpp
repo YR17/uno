@@ -10,10 +10,13 @@
 		sf::RenderWindow window;
 		sf::Texture backgroundTexture;
 		sf::Sprite background;
+		sf::Font font;
 	public:
 		static VideoManager *getInst();
 		void drawBackground();
 		void drawMessage(std::string);
 		sf::RenderWindow *getWindow();
+		void clear();
+		void display();
 	};
 #endif

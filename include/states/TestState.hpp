@@ -4,6 +4,7 @@
 #include <managers/ConnectionManager.hpp>
 	class TestState: public State{
 	ConnectionManager *connectionManager;
+	bool isSent;
 	public:
 		TestState();
 		void draw();
