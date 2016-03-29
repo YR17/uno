@@ -1,7 +1,7 @@
-- Develop GameState class
-- Develop EventManager class
+- Develop Card class
 - Develop Player class
-- Develop Card structure
+- Develop GameState class
+- Make JSON Generation
 - Develop VideoManager drawCard method
 - Develop VideoManager drawPlayer method
 - Refract ConnectionManager, error handling
