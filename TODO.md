@@ -1,0 +1,5 @@
+- Develop Player class
+- Develop Card structure
+- Develop VideoManager drawCard method
+- Develop VideoManager drawPlayer method
+- Refract ConnectionManager, error handling

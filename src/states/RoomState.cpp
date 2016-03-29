@@ -35,7 +35,7 @@ void RoomState::tick(sf::Time time){
 			}
 		}
 		else{
-			// cout<<reader.getFormatedErrorMessages()<<endl;
+			cout<<reader.getFormattedErrorMessages()<<endl;
 		}
 	}
 }
