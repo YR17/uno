@@ -50,6 +50,7 @@ void ConnectionManager::receive(){
 		for(int c=0;c<test.size();c++){
 			if((int)test[c]==10){
 				messages.push(test.substr(lastPos, c-lastPos-1));
+				// cout<<test.substr(lastPos, c-lastPos-1)<<endl<<endl;
 				// string str = test.substr(lastPos, c-lastPos-1);
 				// for(auto &ch:str){
 				// 	cout<<ch<<'\t'<<(int)ch<<endl;

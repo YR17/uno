@@ -1,3 +1,5 @@
+- Develop GameState class
+- Develop EventManager class
 - Develop Player class
 - Develop Card structure
 - Develop VideoManager drawCard method
