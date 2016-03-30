@@ -2,3 +2,4 @@
 - Develop VideoManager drawCard method
 - Develop VideoManager drawPlayer method
 - Refract ConnectionManager, error handling
+- Write Destructors, socket.disconnect(), window.close(), window.destroy()

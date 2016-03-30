@@ -45,13 +45,13 @@ void ConnectionManager::receive(){
 	char msg[4096];
 	size_t s = 0;
 	if(socket.receive(msg, 4096, s)==Socket::Done){
-		// cout<<"Connection manager received: "<<msg<<endl;
+		cout<<"Connection manager received: "<<msg<<endl<<endl;
 		string test(msg);
 		int lastPos = 0;
 		for(int c=0;c<test.size();c++){
 			if((int)test[c]==10){
 				messages.push(test.substr(lastPos, c-lastPos-1));
-				// cout<<test.substr(lastPos, c-lastPos-1)<<endl<<endl;
+				cout<<test.substr(lastPos, c-lastPos-1)<<endl<<endl;
 				// string str = test.substr(lastPos, c-lastPos-1);
 				// for(auto &ch:str){
 				// 	cout<<ch<<'\t'<<(int)ch<<endl;
@@ -59,6 +59,7 @@ void ConnectionManager::receive(){
 				lastPos = c+1;
 			}
 		}
+		messages.push(test.substr(lastPos));
 		// exit(0);
 		// messages.push(string(msg));
 	}

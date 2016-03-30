@@ -37,7 +37,7 @@ void TestState::tick(int elapsedTime){
 			
 		}
 		else{
-			cout<<"Wrong JSON"<<endl;
+			cout<<"Wrong JSON: "<<response<<endl;
 		}
 
 	}
