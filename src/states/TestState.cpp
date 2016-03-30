@@ -15,11 +15,11 @@ void TestState::draw(){
 
 }
 
-void TestState::event(sf::Event event){
+void TestState::event(int x, int y, bool clicked){
 
 }
 
-void TestState::tick(sf::Time time){
+void TestState::tick(int elapsedTime){
 	string msg;
 	if(!connectionManager->isConnected()){
 		msg = "Wait connection from server";
@@ -58,6 +58,6 @@ void TestState::tick(sf::Time time){
 	// 	string id = connectionManager->getMessage();
 	// 	StateManager::getInst()->push(new RoomState(id));
 	// }
-	for(int c=0;c<(int)time.asSeconds()%6;c++)msg+='.';
+	for(int c=0;c<elapsedTime%6;c++)msg+='.';
 	VideoManager::getInst()->drawMessage(msg);
 }

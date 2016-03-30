@@ -15,8 +15,8 @@
 		Json::Reader reader;
 	public:
 		RoomState(std::string);
-		void tick(sf::Time);
+		void tick(int);
 		void draw();
-		void event(sf::Event);
+		void event(int, int, bool);
 	};
 #endif

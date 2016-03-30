@@ -18,7 +18,7 @@ void Application::start(){
 		connectionManager->receive();
 		videoManager->clear();
 		videoManager->drawBackground();
-		stateManager->tick(clock.getElapsedTime());
+		stateManager->tick(clock.getElapsedTime().asMilliseconds());
 		stateManager->draw();
 		videoManager->display();
 		sf::sleep(sf::milliseconds(100));

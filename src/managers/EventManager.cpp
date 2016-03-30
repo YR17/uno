@@ -18,6 +18,6 @@ void EventManager::eventHandle(){
 				return;
 			}break;
 		}
-		StateManager::getInst()->event(event);
+		StateManager::getInst()->event(0, 0, 0);//Send coordinates
 	}
 }

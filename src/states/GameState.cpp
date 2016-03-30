@@ -7,7 +7,11 @@ GameState::GameState(){
 	cout<<"GameState"<<endl;
 }
 
-void GameState::onEvent(Event event){
+void GameState::addPlayer(string name, int cardsNumber){
+	players[name] = cardsNumber;
+}
+
+void GameState::onEvent(int x, int y, bool clicked){
 
 }
 
@@ -15,6 +19,6 @@ void GameState::onDraw(){
 
 }
 
-void GameState::onTick(Clock clock){
+void GameState::onTick(int elapsedTime){
 
 }

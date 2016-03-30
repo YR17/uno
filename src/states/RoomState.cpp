@@ -19,7 +19,7 @@ void RoomState::draw(){
 	videoManager->drawMessage(msg);
 }
 
-void RoomState::tick(sf::Time time){
+void RoomState::tick(int elapsedTime){
 	if(ConnectionManager::getInst()->isReceived()){
 		Json::Value json;
 		string response = ConnectionManager::getInst()->getLastMessage();
@@ -40,6 +40,6 @@ void RoomState::tick(sf::Time time){
 	}
 }
 
-void RoomState::event(sf::Event event){
+void RoomState::event(int x, int y, bool clicked){
 	
 }

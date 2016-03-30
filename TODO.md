@@ -1,7 +1,6 @@
-- Develop Card class
-- Develop Player class
-- Develop GameState class
 - Make JSON Generation
 - Develop VideoManager drawCard method
 - Develop VideoManager drawPlayer method
 - Refract ConnectionManager, error handling
+- Add using namespace to cpp files
+- change headers files for strings

@@ -8,7 +8,7 @@
 	public:
 		TestState();
 		void draw();
-		void event(sf::Event);
-		void tick(sf::Time);
+		void event(int, int, bool);
+		void tick(int);
 	};
 #endif
