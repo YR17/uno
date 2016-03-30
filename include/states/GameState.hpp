@@ -3,13 +3,15 @@
 	#include <states/State.hpp>
 	#include <application/Player.hpp>
 	#include <map>
-	class GameState: State{
+	class GameState: public State{
 		std::map<std::string, int> players;
+		Player *curentPlayer;
 	public:
-		GameState();
+		GameState(Player*);
+		Player *getCurentPlayer();
 		void addPlayer(std::string, int);
-		void onEvent(int, int, bool);
-		void onDraw();
-		void onTick(int);
+		void event(int, int, bool);
+		void draw();
+		void tick(int);
 	};
 #endif

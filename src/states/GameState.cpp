@@ -3,22 +3,27 @@
 using namespace std;
 using namespace sf;
 
-GameState::GameState(){
+GameState::GameState(Player *curentPlayer){
+	this->curentPlayer = curentPlayer;
 	cout<<"GameState"<<endl;
+}
+
+Player *GameState::getCurentPlayer(){
+	return curentPlayer;
 }
 
 void GameState::addPlayer(string name, int cardsNumber){
 	players[name] = cardsNumber;
 }
 
-void GameState::onEvent(int x, int y, bool clicked){
+void GameState::event(int x, int y, bool clicked){
 
 }
 
-void GameState::onDraw(){
+void GameState::draw(){
 
 }
 
-void GameState::onTick(int elapsedTime){
+void GameState::tick(int elapsedTime){
 
 }
