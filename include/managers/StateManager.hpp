@@ -2,7 +2,6 @@
 	#define STATE_MANAGER_HPP
 	#include <states/State.hpp>
 	#include <stack>
-	#include <sfml/System.hpp>
 	class StateManager{
 		std::stack<State*> states;
 		static StateManager *pInstance;

@@ -1,4 +1,5 @@
 #include <application/Card.hpp>
+#include <iostream>
 using namespace std;
 using namespace sf;
 

@@ -4,7 +4,7 @@
 	#include <managers/ConnectionManager.hpp>
 	#include <managers/VideoManager.hpp>
 	#include <json/json.h>
-	#include <iostream>
+	#include <string>
 	#include <vector>
 	class RoomState:public State{
 		std::string id;

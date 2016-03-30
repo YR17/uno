@@ -1,9 +1,7 @@
 #ifndef VIDEO_MANAGER_HPP
 	#define VIDEO_MANAGER_HPP
-	#include <sfml/Window.hpp>
-	#include <sfml/System.hpp>
 	#include <sfml/Graphics.hpp>
-	#include <iostream>
+	#include <string>
 	class VideoManager{
 		VideoManager();
 		static VideoManager *pInstance;

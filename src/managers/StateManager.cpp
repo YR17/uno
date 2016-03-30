@@ -1,9 +1,10 @@
 #include <managers/StateManager.hpp>
+#include <cstddef>
 
 StateManager *StateManager::pInstance = 0;
 
 StateManager *StateManager::getInst(){
-	if(pInstance==NULL)pInstance = new StateManager();
+	if(pInstance==nullptr)pInstance = new StateManager();
 	return pInstance;
 }
 

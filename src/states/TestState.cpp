@@ -5,6 +5,7 @@
 #include <json/json.h>
 #include <iostream>
 using namespace std;
+using namespace Json;
 
 TestState::TestState(){
 	connectionManager = ConnectionManager::getInst();
@@ -27,8 +28,8 @@ void TestState::tick(int elapsedTime){
 	else if(connectionManager->isReceived()){
 		string response = connectionManager->getLastMessage();
 		// cout<<response<<endl;
-		Json::Reader reader;
-		Json::Value result;
+		Reader reader;
+		Value result;
 		if(reader.parse(response, result)){
 			result = result["id"];
 			cout<<"id: "<<result.asString()<<endl;

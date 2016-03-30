@@ -2,5 +2,3 @@
 - Develop VideoManager drawCard method
 - Develop VideoManager drawPlayer method
 - Refract ConnectionManager, error handling
-- Add using namespace to cpp files
-- change headers files for strings

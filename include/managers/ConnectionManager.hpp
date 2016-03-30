@@ -1,7 +1,7 @@
 #ifndef CONNECTION_MANAGER_HPP
 	#define CONNECTION_MANAGER_HPP
 	#include <sfml/Network.hpp>
-	#include <iostream>
+	#include <string>
 	#include <queue>
 	class ConnectionManager{
 		static ConnectionManager *pInstance;

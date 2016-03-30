@@ -1,7 +1,5 @@
 #ifndef STATE_HPP
 	#define STATE_HPP
-	#include <sfml/System.hpp>
-	#include <sfml/Window.hpp>
 	class State{
 	public:
 		virtual void draw() = 0;

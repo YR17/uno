@@ -1,6 +1,7 @@
 #include <managers/ConnectionManager.hpp>
 #include <iostream>
 using namespace std;
+using namespace sf;
 
 ConnectionManager *ConnectionManager::pInstance = 0;
 
@@ -14,19 +15,19 @@ ConnectionManager::ConnectionManager():sendThread(&ConnectionManager::sendData, 
 	socket.setBlocking(false);
 }
 
-sf::TcpSocket::Status ConnectionManager::connect(){
+TcpSocket::Status ConnectionManager::connect(){
 	socket.connect("188.231.133.15", 10060);
 }
 
 void ConnectionManager::sendData(){
 	socket.setBlocking(true);
-	while(socket.send(message.c_str(), sizeof(char)*message.size())!=sf::Socket::Done){};
+	while(socket.send(message.c_str(), sizeof(char)*message.size())!=Socket::Done){};
 	isSending = false;
 	socket.setBlocking(false);
 }
 
 bool ConnectionManager::isConnected(){
-	return connect()==sf::Socket::Done;
+	return connect()==Socket::Done;
 }
 
 bool ConnectionManager::isReceived(){
@@ -43,7 +44,7 @@ void ConnectionManager::send(string msg){
 void ConnectionManager::receive(){
 	char msg[4096];
 	size_t s = 0;
-	if(socket.receive(msg, 4096, s)==sf::Socket::Done){
+	if(socket.receive(msg, 4096, s)==Socket::Done){
 		// cout<<"Connection manager received: "<<msg<<endl;
 		string test(msg);
 		int lastPos = 0;

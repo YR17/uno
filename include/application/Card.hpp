@@ -1,7 +1,7 @@
 #ifndef CARD_HPP
 	#define CARD_HPP
 	#include <sfml/Graphics.hpp>
-	#include <iostream>
+	#include <string>
 	class Card{
 		int value;
 		sf::Color sfColor;

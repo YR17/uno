@@ -1,10 +1,10 @@
 #include <states/RoomState.hpp>
 #include <states/GameState.hpp>
-#include <managers/VideoManager.hpp>
 #include <managers/StateManager.hpp>
-#include <managers/ConnectionManager.hpp>
 #include <application/Player.hpp>
+#include <iostream>
 using namespace std;
+using namespace Json;
 
 RoomState::RoomState(string id){
 	playersToGo = 0;
@@ -24,7 +24,7 @@ void RoomState::draw(){
 
 void RoomState::tick(int elapsedTime){
 	if(ConnectionManager::getInst()->isReceived()){
-		Json::Value json;
+		Value json;
 		string response = ConnectionManager::getInst()->getLastMessage();
 		cout<<response<<endl;
 		if(reader.parse(response, json)){
