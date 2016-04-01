@@ -26,7 +26,7 @@ void RoomState::tick(int elapsedTime){
 	if(ConnectionManager::getInst()->isReceived()){
 		Value json;
 		string response = ConnectionManager::getInst()->getLastMessage();
-		cout<<response<<endl;
+		// cout<<response<<endl;
 		if(reader.parse(response, json)){
 			json = json["response"];
 
@@ -44,17 +44,18 @@ void RoomState::tick(int elapsedTime){
 				for(int c=0;c<json["cards"].size();c++){
 					player->addCard(new Card(json["cards"][c]["color"].asString(), json["cards"][c]["value"].asInt()));
 				}
+				cout<<"inGame!!!!"<<endl;
 				GameState *gameState = new GameState(player);
 				for(int c=0;c<json["players"].size();c++){
 					gameState->addPlayer(json["players"][c]["name"].asString(), json["players"][c]["cardsNumber"].asInt());
 				}
 				StateManager::getInst()->push(gameState);
 			}
-			else cout<<"Wrong State"<<endl;
+			else cout<<"Wrong State: "<<response<<endl;
 
 		}
 		else{
-			cout<<reader.getFormattedErrorMessages()<<endl;
+			// cout<<reader.getFormattedErrorMessages()<<"\t"<<response<<endl;
 		}
 	}
 }

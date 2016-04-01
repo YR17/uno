@@ -31,7 +31,7 @@ bool ConnectionManager::isConnected(){
 }
 
 bool ConnectionManager::isReceived(){
-	return messages.size()>0;
+	return messages.size()!=0;
 }
 
 void ConnectionManager::send(string msg){
@@ -45,14 +45,14 @@ void ConnectionManager::receive(){
 	char msg[4096];
 	size_t s = 0;
 	if(socket.receive(msg, 4096, s)==Socket::Done){
-		cout<<"Connection manager received: "<<msg<<endl<<endl;
+		// cout<<"Connection manager received: "<<msg<<endl<<endl;
 		string test(msg);
 		int lastPos = 0;
 		for(int c=0;c<test.size();c++){
 			if((int)test[c]==10){
 				messages.push(test.substr(lastPos, c-lastPos-1));
 				cout<<test.substr(lastPos, c-lastPos-1)<<endl<<endl;
-				// string str = test.substr(lastPos, c-lastPos-1);
+				string str = test.substr(lastPos, c-lastPos-1);
 				// for(auto &ch:str){
 				// 	cout<<ch<<'\t'<<(int)ch<<endl;
 				// }
@@ -79,7 +79,11 @@ string ConnectionManager::getLastMessage(){
 	if(messages.size()>0){
 		string result = messages.front();
 		messages.pop();
+		// cout<<"lastMessage: "<<result<<endl;
+		// for(auto &ch:result){
+		// 	cout<<ch<<'\t'<<(int)ch<<endl;
+		// }
 		return result;
 	}
-	return string();
+	// return ")))))000)))(((";
 }
