@@ -18,3 +18,7 @@ void Player::removeCard(Card *card){
 		}
 	}
 }
+
+list<Card*> Player::getCards(){
+	return cards;
+}

@@ -1,4 +1,5 @@
 #include <states/GameState.hpp>
+#include <managers/VideoManager.hpp>
 #include <iostream>
 using namespace std;
 using namespace sf;
@@ -21,7 +22,8 @@ void GameState::event(int x, int y, bool clicked){
 }
 
 void GameState::draw(){
-
+	for(auto &card: curentPlayer->getCards())
+	VideoManager::getInst()->drawCard(card);
 }
 
 void GameState::tick(int elapsedTime){

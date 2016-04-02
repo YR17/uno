@@ -10,5 +10,6 @@
 		Player(std::string);
 		void addCard(Card*);
 		void removeCard(Card*);
+		std::list<Card*> getCards();
 	};
 #endif
