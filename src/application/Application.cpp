@@ -8,11 +8,12 @@
 void Application::start(){
 	sf::Clock clock;
 	VideoManager *videoManager = VideoManager::getInst();
+	sf::sleep(sf::seconds(5));
 	StateManager *stateManager = StateManager::getInst();
 	ConnectionManager *connectionManager = ConnectionManager::getInst();
 	EventManager *eventManager = EventManager::getInst();
 	stateManager->push(new TestState());
-	sf::Window *window = VideoManager::getInst()->getWindow();
+	sf::RenderWindow *window = VideoManager::getInst()->getWindow();
 	while(!stateManager->isExit()){
 		eventManager->eventHandle();
 		connectionManager->receive();
