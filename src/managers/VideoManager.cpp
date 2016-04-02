@@ -51,7 +51,7 @@ void VideoManager::drawMessage(string msg){
 void VideoManager::drawCard(Card *card){
 
 	Sprite cardSprite;
-	cardSprite.setPosition(Vector2f(0, 0));
+	// cardSprite.setPosition(Vector2f(0, 0));
 	int horizontalPadding;
 	int verticalPadding;
 	
@@ -72,6 +72,9 @@ void VideoManager::drawCard(Card *card){
 		horizontalPadding = cardWidth*card->getValue();
 	}
 
+	horizontalPadding*=cardScale;
+	verticalPadding*=cardScale;
+
 	cardSprite.setTexture(cardDeckTexture);
 	cardSprite.setTextureRect(Rect<int>(horizontalPadding, verticalPadding, cardWidth, cardHeight));
 	cardSprite.setScale(cardScale, cardScale);
@@ -88,22 +91,24 @@ void VideoManager::clear(){
 }
 
 void VideoManager::display(){
-	if(cardsToDraw.size()*cardWidth>windowWidth){
-		int paddingBetween = (windowWidth - cardWidth*cardsToDraw.size())/cardsToDraw.size();
+	// if(cardsToDraw.size()*cardWidth*cardScale>windowWidth){
+		// int paddingBetween = (windowWidth - cardWidth*cardsToDraw.size())/cardsToDraw.size();
 		for(int c=0;c<cardsToDraw.size();c++){
-			int horizontalPadding = (windowWidth - cardsToDraw.size()*cardWidth)/2;
-			int verticalPadding = windowHeight - cardHeight;
-			cardsToDraw[c].setPosition(horizontalPadding+cardWidth*c, verticalPadding);
+			int horizontalPadding = windowWidth/(int)cardsToDraw.size();
+			int verticalPadding = windowHeight - cardHeight*cardScale;
+			cardsToDraw[c].setPosition(horizontalPadding*c, verticalPadding);
 			window.draw(cardsToDraw[c]);
 		}
-	}
-	else{
-		for(int c=0;c<cardsToDraw.size();c++){
-			int horizontalPadding = (windowWidth - cardsToDraw.size()*cardWidth)/2;
-			int verticalPadding = windowHeight - cardHeight;
-			cardsToDraw[c].setPosition(horizontalPadding+cardWidth*c, verticalPadding);
-			window.draw(cardsToDraw[c]);
-		}
-	}
+	// }
+	// else{
+		// for(int c=0;c<cardsToDraw.size();c++){
+		// 	int horizontalPadding = (windowWidth - cardsToDraw.size()*cardWidth*cardScale)/2;
+		// 	int verticalPadding = windowHeight - cardHeight*cardScale;
+		// 	// cout<<windowHeight<<'\t'<<cardHeight<<'\t'<<verticalPadding<<endl;
+		// 	cardsToDraw[c].setPosition(horizontalPadding+cardWidth*c*cardScale, verticalPadding);
+		// 	// cardsToDraw[c].setOrigin(0, 0);
+		// 	window.draw(cardsToDraw[c]);
+		// }
+	// }
 	window.display();
 }
