@@ -22,8 +22,11 @@ void GameState::event(int x, int y, bool clicked){
 }
 
 void GameState::draw(){
-	for(auto &card: curentPlayer->getCards())
-	VideoManager::getInst()->drawCard(card);
+	for(int c=0;c<curentPlayer->getCards().size();c++){
+		VideoManager::getInst()->drawCard(curentPlayer->getCards()[c]);
+	}
+	// for(auto &card: curentPlayer->getCards())
+	// VideoManager::getInst()->drawCard(card);
 }
 
 void GameState::tick(int elapsedTime){

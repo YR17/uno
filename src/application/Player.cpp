@@ -19,6 +19,6 @@ void Player::removeCard(Card *card){
 	}
 }
 
-list<Card*> Player::getCards(){
+vector<Card*> Player::getCards(){
 	return cards;
 }

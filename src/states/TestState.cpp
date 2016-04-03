@@ -32,7 +32,7 @@ void TestState::tick(int elapsedTime){
 		Value result;
 		if(reader.parse(response, result)){
 			result = result["id"];
-			// cout<<"id: "<<result.asString()<<endl;
+			cout<<"id: "<<result.asString()<<endl;
 			StateManager::getInst()->push(new RoomState(result.asString()));
 			
 		}

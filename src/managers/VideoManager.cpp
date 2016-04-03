@@ -13,7 +13,7 @@ VideoManager *VideoManager::getInst(){
 }
 
 VideoManager::VideoManager(){
-	window.create(sf::VideoMode(windowWidth, windowHeight), "Uno");
+	window.create(sf::VideoMode(width, height), "Uno");
 	if(!backgroundTexture.loadFromFile("data/background.png")){
 		cout<<"error"<<endl;
 	}
@@ -55,23 +55,23 @@ void VideoManager::drawCard(Card *card){
 	int horizontalPadding;
 	int verticalPadding = 0;
 
-	if(card->getStringColor()=="yellow"){
-		verticalPadding = cardHeight;
+	if(card->getColor()=="yellow"){
+		verticalPadding = Card::height;
 	}
-	else if(card->getStringColor()=="green"){
-		verticalPadding = 2*cardHeight;
+	else if(card->getColor()=="green"){
+		verticalPadding = 2*Card::height;
 	}
-	else if(card->getStringColor()=="blue"){
-		verticalPadding = 3*cardHeight;
+	else if(card->getColor()=="blue"){
+		verticalPadding = 3*Card::height;
 	}
 
 	if(card->getValue()<15){
-		horizontalPadding = cardWidth*card->getValue();
+		horizontalPadding = Card::width*card->getValue();
 	}
 
 	cardSprite.setTexture(cardDeckTexture);
-	cardSprite.setTextureRect(Rect<int>(horizontalPadding, verticalPadding, cardWidth, cardHeight));
-	cardSprite.setScale(cardScale, cardScale);
+	cardSprite.setTextureRect(Rect<int>(horizontalPadding, verticalPadding, Card::width, Card::height));
+	cardSprite.setScale(Card::scale, Card::scale);
 	cardsToDraw.push_back(cardSprite);
 
 }
@@ -85,20 +85,20 @@ void VideoManager::clear(){
 }
 
 void VideoManager::display(){
-	if(cardsToDraw.size()*cardWidth*cardScale>windowWidth){
+	if(cardsToDraw.size()*Card::width*Card::scale>width){
 		for(int c=0;c<cardsToDraw.size();c++){
-			int horizontalPadding = windowWidth/(int)cardsToDraw.size();
-			int verticalPadding = windowHeight - cardHeight*cardScale;
+			int horizontalPadding = width/(int)cardsToDraw.size();
+			int verticalPadding = height - Card::height*Card::scale;
 			cardsToDraw[c].setPosition(horizontalPadding*c, verticalPadding);
 			window.draw(cardsToDraw[c]);
 		}
 	}
 	else{
 		for(int c=0;c<cardsToDraw.size();c++){
-			int horizontalPadding = (windowWidth - cardsToDraw.size()*cardWidth*cardScale)/2;
-			int verticalPadding = windowHeight - cardHeight*cardScale;
-			// cout<<windowHeight<<'\t'<<cardHeight<<'\t'<<verticalPadding<<endl;
-			cardsToDraw[c].setPosition(horizontalPadding+cardWidth*c*cardScale, verticalPadding);
+			int horizontalPadding = (width - cardsToDraw.size()*Card::width*Card::scale)/2;
+			int verticalPadding = height - Card::height*Card::scale;
+			// cout<<height<<'\t'<<cardHeight<<'\t'<<verticalPadding<<endl;
+			cardsToDraw[c].setPosition(horizontalPadding+Card::width*c*Card::scale, verticalPadding);
 			// cardsToDraw[c].setOrigin(0, 0);
 			window.draw(cardsToDraw[c]);
 		}

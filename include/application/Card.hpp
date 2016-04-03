@@ -4,13 +4,13 @@
 	#include <string>
 	class Card{
 		int value;
-		sf::Color sfColor;
-		std::string stringColor;
+		std::string color;
 	public:
+		static const int width = 240;
+		static const int height = 360;
+		static const float scale;
 		Card(std::string, int);
-		Card(sf::Color, int);
-		sf::Color getSfColor();
-		std::string getStringColor();
+		std::string getColor();
 		int getValue();
 	};
 #endif

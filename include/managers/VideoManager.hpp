@@ -5,11 +5,6 @@
 	#include <string>
 	#include <vector>
 	class VideoManager{
-		const int cardWidth = 240;
-		const int cardHeight = 360;
-		const float cardScale = 0.3;
-		const int windowWidth = 640;
-		const int windowHeight = 420;
 		VideoManager();
 		static VideoManager *pInstance;
 		sf::RenderWindow window;
@@ -19,6 +14,8 @@
 		sf::Font font;
 		std::vector<sf::Sprite> cardsToDraw;
 	public:
+		static const int width = 640;
+		static const int height = 420;
 		static VideoManager *getInst();
 		void drawBackground();
 		void drawMessage(std::string);
