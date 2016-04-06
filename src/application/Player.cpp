@@ -3,6 +3,7 @@ using namespace std;
 
 Player::Player(string name){
 	this->name = name;
+	curentCard = -1;
 }
 
 void Player::addCard(Card *card){
@@ -21,4 +22,12 @@ void Player::removeCard(Card *card){
 
 vector<Card*> Player::getCards(){
 	return cards;
+}
+
+void Player::setCurentCard(int num){
+	curentCard = num;
+}
+
+int Player::getCurentCard(){
+	return curentCard;
 }

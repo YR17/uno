@@ -44,6 +44,9 @@ void RoomState::tick(int elapsedTime){
 				for(int c=0;c<json["cards"].size();c++){
 					player->addCard(new Card(json["cards"][c]["color"].asString(), json["cards"][c]["value"].asInt()));
 				}
+				// for(int c=0;c<14;c++){
+				// 	player->addCard(new Card("yellow", c));
+				// }
 				cout<<"inGame!!!!"<<endl;
 				GameState *gameState = new GameState(player);
 				for(int c=0;c<json["players"].size();c++){

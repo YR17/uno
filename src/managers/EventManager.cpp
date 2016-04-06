@@ -2,6 +2,8 @@
 #include <managers/StateManager.hpp>
 #include <managers/VideoManager.hpp>
 
+#include <iostream>
+
 EventManager *EventManager::pInst = 0;
 
 EventManager *EventManager::getInst(){
@@ -10,6 +12,7 @@ EventManager *EventManager::getInst(){
 }
 
 void EventManager::eventHandle(){
+	// std::cout<<"EventHandlle"<<std::endl;
 	sf::Event event;
 	while(VideoManager::getInst()->getWindow()->pollEvent(event)){
 		switch(event.type){
@@ -17,7 +20,9 @@ void EventManager::eventHandle(){
 				StateManager::getInst()->clear();
 				return;
 			}break;
+			case sf::Event::MouseMoved:{
+				StateManager::getInst()->event(event.mouseMove.x, event.mouseMove.y, 0);//Send coordinates
+			}break;
 		}
-		StateManager::getInst()->event(0, 0, 0);//Send coordinates
 	}
 }

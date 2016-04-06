@@ -48,7 +48,7 @@ void VideoManager::drawMessage(string msg){
 	window.draw(text);
 }
 
-void VideoManager::drawCard(Card *card){
+void VideoManager::drawCard(Card *card, bool isActive){
 
 	Sprite cardSprite;
 	// cardSprite.setPosition(Vector2f(0, 0));
@@ -69,6 +69,10 @@ void VideoManager::drawCard(Card *card){
 		horizontalPadding = Card::width*card->getValue();
 	}
 
+	if(isActive)
+		cardSprite.setPosition(0, -20);
+	else
+		cardSprite.setPosition(0, -10);
 	cardSprite.setTexture(cardDeckTexture);
 	cardSprite.setTextureRect(Rect<int>(horizontalPadding, verticalPadding, Card::width, Card::height));
 	cardSprite.setScale(Card::scale, Card::scale);
@@ -89,7 +93,7 @@ void VideoManager::display(){
 		for(int c=0;c<cardsToDraw.size();c++){
 			int horizontalPadding = width/(int)cardsToDraw.size();
 			int verticalPadding = height - Card::height*Card::scale;
-			cardsToDraw[c].setPosition(horizontalPadding*c, verticalPadding);
+			cardsToDraw[c].move(horizontalPadding*c, verticalPadding);
 			window.draw(cardsToDraw[c]);
 		}
 	}
@@ -98,7 +102,7 @@ void VideoManager::display(){
 			int horizontalPadding = (width - cardsToDraw.size()*Card::width*Card::scale)/2;
 			int verticalPadding = height - Card::height*Card::scale;
 			// cout<<height<<'\t'<<cardHeight<<'\t'<<verticalPadding<<endl;
-			cardsToDraw[c].setPosition(horizontalPadding+Card::width*c*Card::scale, verticalPadding);
+			cardsToDraw[c].move(horizontalPadding+Card::width*c*Card::scale, verticalPadding);
 			// cardsToDraw[c].setOrigin(0, 0);
 			window.draw(cardsToDraw[c]);
 		}
