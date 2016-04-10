@@ -16,7 +16,7 @@ ConnectionManager::ConnectionManager():sendThread(&ConnectionManager::sendData, 
 }
 
 TcpSocket::Status ConnectionManager::connect(){
-	socket.connect("127.0.0.1", 10060);
+	socket.connect("188.231.133.15", 10060);
 	//188.231.133.15
 }
 
