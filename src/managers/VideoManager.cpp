@@ -48,35 +48,74 @@ void VideoManager::drawMessage(string msg){
 	window.draw(text);
 }
 
-void VideoManager::drawCard(Card *card, bool isActive){
+void VideoManager::drawCards(vector<Card*> deck, int selectedCardNumber){
 
-	Sprite cardSprite;
+	for(int c=0;c<deck.size();c++){
+		Card *card = deck[c];
+		//Create sprite for each card in deck
+		Sprite cardSprite;
+		
+		int horizontalMargin;
+		int verticalMargin = 0;
+
+		if(card->getColor()=="yellow"){
+			verticalMargin = Card::height;
+		}
+		else if(card->getColor()=="green"){
+			verticalMargin = 2*Card::height;
+		}
+		else if(card->getColor()=="blue"){
+			verticalMargin = 3*Card::height;
+		}
+
+		if(card->getValue()<15){
+			horizontalMargin = Card::width*card->getValue();
+		}
+
+		if(selectedCardNumber==c)
+			cardSprite.setPosition(0, -20);
+		else
+			cardSprite.setPosition(0, -10);
+		cardSprite.setTexture(cardDeckTexture);
+		cardSprite.setTextureRect(Rect<int>(horizontalMargin, verticalMargin, Card::width, Card::height));
+		cardSprite.setScale(Card::scale, Card::scale);
+
+		//Draw generated sprite
+
+		int horizontalPadding;
+		int verticalPadding = height - Card::height*Card::scale;
+
+		if(deck.size()*Card::width*Card::scale>width){
+			horizontalPadding = (width/(int)deck.size())*c;
+		}
+		else{
+			horizontalPadding = (width - deck.size()*Card::width*Card::scale)/2 + Card::width*Card::scale*c;
+		}
+		cardSprite.move(horizontalPadding, verticalPadding);
+		window.draw(cardSprite);
+	}
+
+
+
+	// if(deck.size()*Card::width*Card::scale>width){
+	// 	for(int c=0;c<deck.size();c++){
+	// 		int horizontalPadding = width/(int)deck.size();
+	// 		int verticalPadding = height - Card::height*Card::scale;
+	// 		cardsToDraw[c].move(horizontalPadding*c, verticalPadding);
+	// 		window.draw(cardsToDraw[c]);
+	// 	}
+	// }
+	// else{
+	// 	for(int c=0;c<deck.size();c++){
+	// 		int horizontalPadding = (width - deck.size()*Card::width*Card::scale)/2;
+	// 		int verticalPadding = height - Card::height*Card::scale;
+	// 		// cout<<height<<'\t'<<cardHeight<<'\t'<<verticalPadding<<endl;
+	// 		cardsToDraw[c].move(horizontalPadding+Card::width*c*Card::scale, verticalPadding);
+	// 		// cardsToDraw[c].setOrigin(0, 0);
+	// 		window.draw(cardsToDraw[c]);
+	// 	}
+	// }
 	// cardSprite.setPosition(Vector2f(0, 0));
-	int horizontalPadding;
-	int verticalPadding = 0;
-
-	if(card->getColor()=="yellow"){
-		verticalPadding = Card::height;
-	}
-	else if(card->getColor()=="green"){
-		verticalPadding = 2*Card::height;
-	}
-	else if(card->getColor()=="blue"){
-		verticalPadding = 3*Card::height;
-	}
-
-	if(card->getValue()<15){
-		horizontalPadding = Card::width*card->getValue();
-	}
-
-	if(isActive)
-		cardSprite.setPosition(0, -20);
-	else
-		cardSprite.setPosition(0, -10);
-	cardSprite.setTexture(cardDeckTexture);
-	cardSprite.setTextureRect(Rect<int>(horizontalPadding, verticalPadding, Card::width, Card::height));
-	cardSprite.setScale(Card::scale, Card::scale);
-	cardsToDraw.push_back(cardSprite);
 
 }
 
@@ -89,24 +128,5 @@ void VideoManager::clear(){
 }
 
 void VideoManager::display(){
-	if(cardsToDraw.size()*Card::width*Card::scale>width){
-		for(int c=0;c<cardsToDraw.size();c++){
-			int horizontalPadding = width/(int)cardsToDraw.size();
-			int verticalPadding = height - Card::height*Card::scale;
-			cardsToDraw[c].move(horizontalPadding*c, verticalPadding);
-			window.draw(cardsToDraw[c]);
-		}
-	}
-	else{
-		for(int c=0;c<cardsToDraw.size();c++){
-			int horizontalPadding = (width - cardsToDraw.size()*Card::width*Card::scale)/2;
-			int verticalPadding = height - Card::height*Card::scale;
-			// cout<<height<<'\t'<<cardHeight<<'\t'<<verticalPadding<<endl;
-			cardsToDraw[c].move(horizontalPadding+Card::width*c*Card::scale, verticalPadding);
-			// cardsToDraw[c].setOrigin(0, 0);
-			window.draw(cardsToDraw[c]);
-		}
-	}
-	cardsToDraw.clear();
 	window.display();
 }

@@ -12,14 +12,13 @@
 		sf::Texture cardDeckTexture;
 		sf::Sprite background;
 		sf::Font font;
-		std::vector<sf::Sprite> cardsToDraw;
 	public:
 		static const int width = 640;
 		static const int height = 420;
 		static VideoManager *getInst();
 		void drawBackground();
 		void drawMessage(std::string);
-		void drawCard(Card*, bool=false);
+		void drawCards(std::vector<Card*>, int);
 		sf::RenderWindow *getWindow();
 		void clear();
 		void display();

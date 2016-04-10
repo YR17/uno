@@ -49,9 +49,7 @@ void GameState::event(int x, int y, bool clicked){
 }
 
 void GameState::draw(){
-	for(int c=0;c<curentPlayer->getCards().size();c++){
-		VideoManager::getInst()->drawCard(curentPlayer->getCards()[c], c==curentPlayer->getCurentCard());
-	}
+		VideoManager::getInst()->drawCards(curentPlayer->getCards(), curentPlayer->getCurentCard());
 }
 
 void GameState::tick(int elapsedTime){
