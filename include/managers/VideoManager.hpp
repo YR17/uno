@@ -12,6 +12,7 @@
 		sf::Texture cardDeckTexture;
 		sf::Sprite background;
 		sf::Font font;
+		sf::Sprite getCardSprite(Card *);
 	public:
 		static const int width = 640;
 		static const int height = 420;
