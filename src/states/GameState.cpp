@@ -1,6 +1,7 @@
 #include <states/GameState.hpp>
 #include <managers/ConnectionManager.hpp>
 #include <managers/VideoManager.hpp>
+#include <managers/JsonManager.hpp>
 #include <json/json.h>
 #include <iostream>
 using namespace std;
@@ -44,7 +45,8 @@ void GameState::event(int x, int y, bool clicked){
 	if(clicked&&curentPlayer->getCurentCard()!=-1){
 		Card *card = curentPlayer->getCards()[curentPlayer->getCurentCard()];
 		cout<<"{\"request\":\"move\", \"card\":{\"color\":\"" + card->getColor() + "\", \"value\":" + std::to_string(card->getValue()) + "}}"<<endl;
-		ConnectionManager::getInst()->send("{\"request\":\"move\", \"card\":{\"color\":\"" + card->getColor() + "\", \"value\":" + std::to_string(card->getValue()) + "}}");
+		ConnectionManager::getInst()->send(JsonManager::getCard(card));
+		cout<<JsonManager::getCard(card)<<endl;
 	}
 }
 

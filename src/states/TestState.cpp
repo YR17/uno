@@ -1,6 +1,7 @@
 #include <states/TestState.hpp>
 #include <managers/VideoManager.hpp>
 #include <managers/StateManager.hpp>
+#include <managers/JsonManager.hpp>
 #include <states/RoomState.hpp>
 #include <json/json.h>
 #include <iostream>
@@ -44,7 +45,7 @@ void TestState::tick(int elapsedTime){
 	else if(connectionManager->isConnected()){
 		if(!isSent){
 			isSent = true;
-			connectionManager->send("{\"request\":\"newConnection\", \"name\":\"testPlayer\"}");
+			connectionManager->send(JsonManager::getConnectionString("testPlayer"));
 		}
 	}
 	else{
