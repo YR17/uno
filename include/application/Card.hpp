@@ -8,6 +8,8 @@
 	public:
 		static const int width = 240;
 		static const int height = 360;
+		static const int realWidth;
+		static const int realHeight;
 		static const float scale;
 		Card(std::string, int);
 		std::string getColor();

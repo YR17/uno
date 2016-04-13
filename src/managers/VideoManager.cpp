@@ -20,6 +20,9 @@ VideoManager::VideoManager(){
 	if(!cardDeckTexture.loadFromFile("data/deck.png")){
 		cout<<"error"<<endl;
 	}
+	if(!cardBackTexture.loadFromFile("data/back.png")){
+		cout<<"error"<<endl;
+	}
 	if(!font.loadFromFile("open-sans.light.ttf")){
 		cout<<"error"<<endl;
 	}
@@ -51,12 +54,25 @@ Sprite VideoManager::getCardSprite(Card *card){
 		horizontalMargin = Card::width*card->getValue();
 	}
 
-
-	cardSprite.setPosition(0, -10);
 	cardSprite.setTexture(cardDeckTexture);
 	cardSprite.setTextureRect(Rect<int>(horizontalMargin, verticalMargin, Card::width, Card::height));
 	cardSprite.setScale(Card::scale, Card::scale);
 	return cardSprite;
+}
+
+void VideoManager::drawDeck(int size, Card *topCard){
+	Sprite backCardSprite(cardBackTexture);
+	float verticalScale = (float)Card::realHeight/backCardSprite.getTextureRect().height;
+	float horizontalScale = (float)Card::realWidth/backCardSprite.getTextureRect().width;
+	backCardSprite.setScale(horizontalScale, verticalScale);
+	Sprite topCardSprite = getCardSprite(topCard);
+	const int padding = 5;
+	const int verticalPadding = height/2 - Card::realHeight/2;
+	const int horizontalPadding = (width - Card::realWidth*2 - padding)/2;
+	backCardSprite.setPosition(horizontalPadding, verticalPadding);
+	topCardSprite.setPosition(horizontalPadding + Card::realWidth + padding, verticalPadding);
+	window.draw(backCardSprite);
+	window.draw(topCardSprite);
 }
 
 sf::RenderWindow *VideoManager::getWindow(){
@@ -83,19 +99,20 @@ void VideoManager::drawCards(vector<Card*> deck, int selectedCardNumber){
 		//Create sprite for each card in deck
 		
 		Sprite cardSprite = getCardSprite(card);
+		cardSprite.setPosition(0, -10);
 		
 		if(selectedCardNumber==c)
 			cardSprite.move(0, -10);
 		//Draw generated sprite
 
 		int horizontalPadding;
-		int verticalPadding = height - Card::height*Card::scale;
+		int verticalPadding = height - Card::realHeight;
 
-		if(deck.size()*Card::width*Card::scale>width){
+		if(deck.size()*Card::realWidth>width){
 			horizontalPadding = (width/(int)deck.size())*c;
 		}
 		else{
-			horizontalPadding = (width - deck.size()*Card::width*Card::scale)/2 + Card::width*Card::scale*c;
+			horizontalPadding = (width - deck.size()*Card::realWidth)/2 + Card::realWidth*c;
 		}
 		cardSprite.move(horizontalPadding, verticalPadding);
 		window.draw(cardSprite);

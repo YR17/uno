@@ -10,6 +10,7 @@
 		sf::RenderWindow window;
 		sf::Texture backgroundTexture;
 		sf::Texture cardDeckTexture;
+		sf::Texture cardBackTexture;
 		sf::Sprite background;
 		sf::Font font;
 		sf::Sprite getCardSprite(Card *);
@@ -20,6 +21,7 @@
 		void drawBackground();
 		void drawMessage(std::string);
 		void drawCards(std::vector<Card*>, int);
+		void drawDeck(int, Card*);
 		sf::RenderWindow *getWindow();
 		void clear();
 		void display();
