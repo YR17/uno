@@ -37,9 +37,9 @@ void GameState::event(int x, int y, bool clicked){
 		curentPlayer->setCurentCard(-1);
 		// cout<<"-1"<<endl;
 	}
-	if(clicked){
-		cout<<"clicked"<<endl;
-	}
+	// if(clicked){
+	// 	cout<<"clicked"<<endl;
+	// }
 	// cout<<x<<'\t'<<y<<'\t'<<curentPlayer->getCurentCard()<<endl;
 	if(clicked&&curentPlayer->getCurentCard()!=-1){
 		Card *card = curentPlayer->getCards()[curentPlayer->getCurentCard()];
@@ -53,24 +53,31 @@ void GameState::draw(){
 }
 
 void GameState::tick(int elapsedTime){
-	// if(ConnectionManager::getInst()->isReceived()){
-	// 			Json::Reader reader;
-	// 			Json::Value json;
-	// 			reader.parse(ConnectionManager::getInst()->getLastMessage().c_str(), json);
-	// 			Player *player = new Player("testPlayer");
-	// 			for(int c=0;c<json["cards"].size();c++){
-	// 				player->addCard(new Card(json["cards"][c]["color"].asString(), json["cards"][c]["value"].asInt()));
-	// 			}
-	// 			// for(int c=0;c<14;c++){
-	// 			// 	player->addCard(new Card("yellow", c));
-	// 			// }
-	// 			// cout<<"inGame!!!!"<<endl;
-	// 			players.clear();
-	// 			for(int c=0;c<json["players"].size();c++){
-	// 				addPlayer(json["players"][c]["name"].asString(), json["players"][c]["cardsNumber"].asInt());
-	// 			}
-	// 			delete curentPlayer;
-	// 			curentPlayer = player;
+	if(ConnectionManager::getInst()->isReceived()){
+		Json::Reader reader;
+		Json::Value json;
+		string response = ConnectionManager::getInst()->getLastMessage();
+		cout<<"Try parse:"<<endl;
+		cout<<response<<endl<<endl;
+		if(reader.parse(response.c_str(), json)){
+			Player *player = new Player("testPlayer");
+			json = json["response"];
+			for(int c=0;c<json["cards"].size();c++){
+				player->addCard(new Card(json["cards"][c]["color"].asString(), json["cards"][c]["value"].asInt()));
+			}
+
+			players.clear();
+			for(int c=0;c<json["players"].size();c++){
+				addPlayer(json["players"][c]["name"].asString(), json["players"][c]["cardsNumber"].asInt());
+			}
+			delete curentPlayer;
+			curentPlayer = player;
+		}
+		else cout<<reader.getFormattedErrorMessages()<<endl;
+		// for(int c=0;c<14;c++){
+		// 	player->addCard(new Card("yellow", c));
+		// }
+		// cout<<"inGame!!!!"<<endl;
 	
-	// }
+	}
 }
