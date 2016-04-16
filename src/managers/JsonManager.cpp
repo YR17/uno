@@ -1,12 +1,12 @@
 #include <managers/JsonManager.hpp>
 using namespace std;
 
-JsonManager *JsonManager::pInst = 0;
+// JsonManager *JsonManager::pInst = 0;
 
-JsonManager *JsonManager::getInst(){
-	if(pInst==NULL)pInst = new JsonManager();
-	return pInst;
-}
+// JsonManager *JsonManager::getInst(){
+// 	if(pInst==NULL)pInst = new JsonManager();
+// 	return pInst;
+// }
 
 string JsonManager::getCard(Card *card){
 	string result = "{\"request\":\"move\", \"card\":{\"color\":\"";

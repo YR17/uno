@@ -4,9 +4,9 @@
 	#include <application/Card.hpp>
 	class JsonManager{
 		JsonManager(){};
-		static JsonManager *pInst;
+		// static JsonManager *pInst;
 	public:
-		static JsonManager *getInst();
+		// static JsonManager *getInst();
 		static std::string getCard(Card*);
 		static std::string getConnectionString(std::string);
 	};

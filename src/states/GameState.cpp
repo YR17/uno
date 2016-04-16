@@ -36,17 +36,11 @@ void GameState::event(int x, int y, bool clicked){
 	}
 	else{
 		curentPlayer->setCurentCard(-1);
-		// cout<<"-1"<<endl;
 	}
-	// if(clicked){
-	// 	cout<<"clicked"<<endl;
-	// }
-	// cout<<x<<'\t'<<y<<'\t'<<curentPlayer->getCurentCard()<<endl;
 	if(clicked&&curentPlayer->getCurentCard()!=-1){
 		Card *card = curentPlayer->getCards()[curentPlayer->getCurentCard()];
-		cout<<"{\"request\":\"move\", \"card\":{\"color\":\"" + card->getColor() + "\", \"value\":" + std::to_string(card->getValue()) + "}}"<<endl;
 		ConnectionManager::getInst()->send(JsonManager::getCard(card));
-		cout<<JsonManager::getCard(card)<<endl;
+		// cout<<JsonManager::getCard(card)<<endl;
 	}
 }
 
