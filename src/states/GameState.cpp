@@ -39,14 +39,13 @@ void GameState::event(int x, int y, bool clicked){
 	}
 	if(clicked&&curentPlayer->getCurentCard()!=-1){
 		Card *card = curentPlayer->getCards()[curentPlayer->getCurentCard()];
-		ConnectionManager::getInst()->send(JsonManager::getCard(card));
-		// cout<<JsonManager::getCard(card)<<endl;
+		ConnectionManager::getInst()->send(JsonManager::sendCard(card));
 	}
 }
 
 void GameState::draw(){
 	VideoManager::getInst()->drawCards(curentPlayer->getCards(), curentPlayer->getCurentCard());
-	VideoManager::getInst()->drawDeck(1, new Card("red", 3));
+	VideoManager::getInst()->drawDeck(1, curentPlayer->getTopCard());
 }
 
 void GameState::tick(int elapsedTime){
@@ -59,6 +58,7 @@ void GameState::tick(int elapsedTime){
 		if(reader.parse(response.c_str(), json)){
 			Player *player = new Player("testPlayer");
 			json = json["response"];
+			player->setTopCard(new Card(json["topCard"]["color"].asString(), json["topCard"]["value"].asInt()));
 			for(int c=0;c<json["cards"].size();c++){
 				player->addCard(new Card(json["cards"][c]["color"].asString(), json["cards"][c]["value"].asInt()));
 			}
@@ -70,7 +70,7 @@ void GameState::tick(int elapsedTime){
 			delete curentPlayer;
 			curentPlayer = player;
 		}
-		else cout<<reader.getFormattedErrorMessages()<<endl;
+		// else cout<<reader.getFormattedErrorMessages()<<endl;
 		// for(int c=0;c<14;c++){
 		// 	player->addCard(new Card("yellow", c));
 		// }

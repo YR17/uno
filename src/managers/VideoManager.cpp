@@ -61,6 +61,7 @@ Sprite VideoManager::getCardSprite(Card *card){
 }
 
 void VideoManager::drawDeck(int size, Card *topCard){
+	if(topCard==0)return;
 	Sprite backCardSprite(cardBackTexture);
 	float verticalScale = (float)Card::realHeight/backCardSprite.getTextureRect().height;
 	float horizontalScale = (float)Card::realWidth/backCardSprite.getTextureRect().width;

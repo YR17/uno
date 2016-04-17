@@ -8,7 +8,7 @@ using namespace std;
 // 	return pInst;
 // }
 
-string JsonManager::getCard(Card *card){
+string JsonManager::sendCard(Card *card){
 	string result = "{\"request\":\"move\", \"card\":{\"color\":\"";
 	result+= card->getColor();
 	result+= "\", \"value\":";

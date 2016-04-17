@@ -7,7 +7,7 @@
 		// static JsonManager *pInst;
 	public:
 		// static JsonManager *getInst();
-		static std::string getCard(Card*);
+		static std::string sendCard(Card*);
 		static std::string getConnectionString(std::string);
 	};
 #endif

@@ -4,6 +4,12 @@ using namespace std;
 Player::Player(string name){
 	this->name = name;
 	curentCard = -1;
+	topCard = 0;
+}
+
+Player::~Player(){
+	delete topCard;
+	for(auto &card:cards)delete card;
 }
 
 void Player::addCard(Card *card){
@@ -30,4 +36,12 @@ void Player::setCurentCard(int num){
 
 int Player::getCurentCard(){
 	return curentCard;
+}
+
+void Player::setTopCard(Card *newTopCard){
+	topCard = newTopCard;
+}
+
+Card *Player::getTopCard(){
+	return topCard;
 }
