@@ -1,7 +1,6 @@
 #include <states/RoomState.hpp>
 #include <states/GameState.hpp>
 #include <managers/StateManager.hpp>
-#include <application/Player.hpp>
 #include <iostream>
 using namespace std;
 using namespace Json;
@@ -40,19 +39,7 @@ void RoomState::tick(int elapsedTime){
 				}
 			}
 			else if(json["state"].asString()=="inGame"){
-				Player *player = new Player("testPlayer");
-				for(int c=0;c<json["cards"].size();c++){
-					player->addCard(new Card(json["cards"][c]["color"].asString(), json["cards"][c]["value"].asInt()));
-				}
-				// for(int c=0;c<14;c++){
-				// 	player->addCard(new Card("yellow", c));
-				// }
-				cout<<"inGame!!!!"<<endl;
-				GameState *gameState = new GameState(player);
-				for(int c=0;c<json["players"].size();c++){
-					gameState->addPlayer(json["players"][c]["name"].asString(), json["players"][c]["cardsNumber"].asInt());
-				}
-				StateManager::getInst()->push(gameState);
+				StateManager::getInst()->push(new GameState(json.toStyledString()));
 			}
 			else cout<<"Wrong State: "<<response<<endl;
 

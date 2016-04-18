@@ -37,6 +37,14 @@ VideoManager::VideoManager(){
 Sprite VideoManager::getCardSprite(Card *card){
 	Sprite cardSprite;
 		
+	if(card->getColor()=="back"){
+		cardSprite.setTexture(cardBackTexture);
+		float verticalScale = (float)Card::realHeight/cardSprite.getTextureRect().height;
+		float horizontalScale = (float)Card::realWidth/cardSprite.getTextureRect().width;
+		cardSprite.setScale(horizontalScale, verticalScale);
+		return cardSprite;
+	}
+
 	int horizontalMargin;
 	int verticalMargin = 0;
 
@@ -60,22 +68,6 @@ Sprite VideoManager::getCardSprite(Card *card){
 	return cardSprite;
 }
 
-void VideoManager::drawDeck(int size, Card *topCard){
-	if(topCard==0)return;
-	Sprite backCardSprite(cardBackTexture);
-	float verticalScale = (float)Card::realHeight/backCardSprite.getTextureRect().height;
-	float horizontalScale = (float)Card::realWidth/backCardSprite.getTextureRect().width;
-	backCardSprite.setScale(horizontalScale, verticalScale);
-	Sprite topCardSprite = getCardSprite(topCard);
-	const int padding = 5;
-	const int verticalPadding = height/2 - Card::realHeight/2;
-	const int horizontalPadding = (width - Card::realWidth*2 - padding)/2;
-	backCardSprite.setPosition(horizontalPadding, verticalPadding);
-	topCardSprite.setPosition(horizontalPadding + Card::realWidth + padding, verticalPadding);
-	window.draw(backCardSprite);
-	window.draw(topCardSprite);
-}
-
 sf::RenderWindow *VideoManager::getWindow(){
 	return &window;
 }
@@ -93,31 +85,11 @@ void VideoManager::drawMessage(string msg){
 	window.draw(text);
 }
 
-void VideoManager::drawCards(vector<Card*> deck, int selectedCardNumber){
-
-	for(int c=0;c<deck.size();c++){
-		Card *card = deck[c];
-		//Create sprite for each card in deck
-		
-		Sprite cardSprite = getCardSprite(card);
-		cardSprite.setPosition(0, -10);
-		
-		if(selectedCardNumber==c)
-			cardSprite.move(0, -10);
-		//Draw generated sprite
-
-		int horizontalPadding;
-		int verticalPadding = height - Card::realHeight;
-
-		if(deck.size()*Card::realWidth>width){
-			horizontalPadding = (width/(int)deck.size())*c;
-		}
-		else{
-			horizontalPadding = (width - deck.size()*Card::realWidth)/2 + Card::realWidth*c;
-		}
-		cardSprite.move(horizontalPadding, verticalPadding);
-		window.draw(cardSprite);
-	}
+void VideoManager::drawCard(Card* card, int x, int y){
+	Sprite cardSprite = getCardSprite(card);
+	cardSprite.setPosition(x, y);		
+	window.draw(cardSprite);
+}
 
 
 
@@ -140,8 +112,6 @@ void VideoManager::drawCards(vector<Card*> deck, int selectedCardNumber){
 	// 	}
 	// }
 	// cardSprite.setPosition(Vector2f(0, 0));
-
-}
 
 void VideoManager::drawBackground(){
 	window.draw(background);

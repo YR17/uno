@@ -20,8 +20,7 @@
 		static VideoManager *getInst();
 		void drawBackground();
 		void drawMessage(std::string);
-		void drawCards(std::vector<Card*>, int);
-		void drawDeck(int, Card*);
+		void drawCard(Card *, int, int);
 		sf::RenderWindow *getWindow();
 		void clear();
 		void display();
