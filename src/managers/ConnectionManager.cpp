@@ -46,41 +46,22 @@ void ConnectionManager::receive(){
 	char msg[4096];
 	size_t s = 0;
 	if(socket.receive(msg, 4096, s)==Socket::Done){
-		// cout<<"Connection manager received: "<<msg<<endl<<endl;
-		// cout<<"begin message"<<endl;
-		// for(int c=0;c<s;c++){
-		// 	cout<<msg[c]<<'\t'<<(int)msg[c]<<endl;
-		// }
-		// cout<<"end message"<<endl;
-		string test(msg);
-		int lastPos = 0;
-		for(int c=0;c<test.size();c++){
-			if((int)test[c]==10){
-				messages.push(test.substr(lastPos, c-lastPos-1));
-				cout<<test.substr(lastPos, c-lastPos-1)<<endl<<endl;
-				string str = test.substr(lastPos, c-lastPos-1);
-				// for(auto &ch:str){
-				// 	cout<<ch<<'\t'<<(int)ch<<endl;
-				// }
-				lastPos = c+1;
-				c++;
+		string message(msg);
+		string::iterator first;
+		string::iterator last;
+		int bracketCounter = 0;
+		auto i = message.begin();
+		while(i!=message.end()){
+			if(*i=='{'&&!bracketCounter)first = i;
+			if(*i=='{')bracketCounter++;
+			if(*i=='}')bracketCounter--;
+			if(*i=='}'&&!bracketCounter){
+				last = i+1;
+				messages.push(string(first, last));
 			}
+			i++;
 		}
-		if(test.length()-lastPos>4)
-		messages.push(test.substr(lastPos, test.length()));
-		// exit(0);
-		// messages.push(string(msg));
 	}
-	// 	int lastPos = 0;
-	// 	for(int c=0;c<s;c++){
-	// 		if(msg[c]=='\n'){
-	// 			messages.push(string(msg+lastPos, c-lastPos));
-	// 			lastPos = c;
-	// 		}
-	// 	}
-	// 	messages.push(string(msg+lastPos, s-lastPos));
-	// }
-	// cout<<"Messages size: "<<messages.size()<<endl;
 }
 
 string ConnectionManager::getLastMessage(){
@@ -91,6 +72,7 @@ string ConnectionManager::getLastMessage(){
 		// 	cout<<ch<<'\t'<<(int)ch<<endl;
 		// }
 		messages.pop();
+		cout<<result<<endl;
 		return result;
 	}
 	// return ")))))000)))(((";

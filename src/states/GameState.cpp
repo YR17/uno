@@ -96,14 +96,14 @@ void GameState::event(sf::Event event){
 
 	if(y>VideoManager::height - Card::height*Card::scale){
 		int numberOfCards = cards.size();
-		if(numberOfCards*Card::scale*Card::width>VideoManager::width){
+		if(numberOfCards*Card::realWidth>VideoManager::width){
 			int cardWidth = VideoManager::width / numberOfCards;
-			curentCard = x/cardWidth;
+			if(x/cardWidth<=cards.size()-1&&x/cardWidth>=0)curentCard = x/cardWidth;
 		}
 		else{
-			int padding = (VideoManager::width - numberOfCards * Card::width * Card::scale)/2;
+			int padding = (VideoManager::width - numberOfCards * Card::realWidth)/2;
 			if(x>padding&&x<VideoManager::width-padding){
-				curentCard = (x-padding)/(Card::width*Card::scale);
+				if((x-padding)/Card::realWidth<=cards.size()-1&&(x-padding)/Card::realWidth>=0)curentCard = (x-padding)/Card::realWidth;
 			}
 		}
 	}
@@ -136,8 +136,8 @@ void GameState::tick(int elapsedTime){
 		Json::Reader reader;
 		Json::Value json;
 		string response = ConnectionManager::getInst()->getLastMessage();
-		cout<<"Try parse:"<<endl;
-		cout<<response<<endl<<endl;
+		// cout<<"Try parse:"<<endl;
+		// cout<<response<<endl<<endl;
 		if(reader.parse(response.c_str(), json)){
 			json = json["response"];
 			update(json.toStyledString());
