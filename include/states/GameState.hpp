@@ -12,8 +12,10 @@
 		int curentCard;
 		void drawDeck();
 		void update(std::string);
+		bool isCurentMover;
+		std::string nickname;
 	public:
-		GameState(std::string);
+		GameState(std::string, std::string);
 		void addPlayer(std::string, int);
 		void event(sf::Event);
 		void draw();

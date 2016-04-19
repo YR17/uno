@@ -5,9 +5,10 @@
 using namespace std;
 using namespace Json;
 
-RoomState::RoomState(string id){
+RoomState::RoomState(string nickname, string id){
 	playersToGo = 0;
 	this->id = id;
+	this->nickname = nickname;
 	connectionManager = ConnectionManager::getInst();
 	videoManager = VideoManager::getInst();
 	// ConnectionManager::getInst()->send("{\"request\":\"room\"}");
@@ -39,7 +40,7 @@ void RoomState::tick(int elapsedTime){
 				}
 			}
 			else if(json["state"].asString()=="inGame"){
-				StateManager::getInst()->push(new GameState(json.toStyledString()));
+				StateManager::getInst()->push(new GameState(json.toStyledString(), nickname));
 			}
 			else cout<<"Wrong State: "<<response<<endl;
 

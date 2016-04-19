@@ -3,7 +3,7 @@
 #include <managers/VideoManager.hpp>
 #include <managers/ConnectionManager.hpp>
 #include <managers/EventManager.hpp>
-#include <states/ConnectionState.hpp>
+#include <states/InputState.hpp>
 
 void Application::start(){
 	sf::Clock clock;
@@ -20,7 +20,7 @@ void Application::start(){
 	StateManager *stateManager = StateManager::getInst();
 	ConnectionManager *connectionManager = ConnectionManager::getInst();
 	EventManager *eventManager = EventManager::getInst();
-	stateManager->push(new ConnectionState());
+	stateManager->push(new InputState());
 	sf::RenderWindow *window = VideoManager::getInst()->getWindow();
 	while(!stateManager->isExit()){
 		eventManager->eventHandle();

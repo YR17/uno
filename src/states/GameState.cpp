@@ -12,6 +12,8 @@ void GameState::update(std::string jsonString){
 	Json::Reader reader;
 	Json::Value json;
 	if(reader.parse(jsonString.c_str(), json)){
+		if(json["mover"].asString()==nickname)isCurentMover=true;
+		else isCurentMover = false;
 		delete topCard;
 		topCard = new Card(json["topCard"]["color"].asString(), json["topCard"]["value"].asInt());
 		for(auto &card:cards)delete card;
@@ -62,10 +64,12 @@ void GameState::drawDeck(){
 	VideoManager::getInst()->drawCard(topCard, horizontalPadding + Card::realWidth + padding, verticalPadding);
 }
 
-GameState::GameState(string jsonString){
+GameState::GameState(string jsonString, string nickname){
 	backCard = new Card("back", 0);
 	topCard = new Card("back", 0);
 	curentCard = -1;
+	isCurentMover = false;
+	this->nickname = nickname;
 	update(jsonString);
 	cout<<"GameState"<<endl;
 }
@@ -114,6 +118,7 @@ void GameState::event(sf::Event event){
 
 void GameState::draw(){
 	drawDeck();
+	if(isCurentMover)VideoManager::getInst()->drawMessage("Your turn");
 }
 
 void GameState::tick(int elapsedTime){

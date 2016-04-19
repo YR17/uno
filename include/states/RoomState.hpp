@@ -10,11 +10,12 @@
 		std::string id;
 		int playersToGo;
 		std::vector<std::string> players;
+		std::string nickname;
 		ConnectionManager *connectionManager;
 		VideoManager *videoManager;
 		Json::Reader reader;
 	public:
-		RoomState(std::string);
+		RoomState(std::string, std::string);
 		void tick(int);
 		void draw();
 		void event(sf::Event);
