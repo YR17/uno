@@ -23,3 +23,7 @@ string JsonManager::getConnectionString(string name){
 	result+="\"}";
 	return result;
 }
+
+string JsonManager::getCard(){
+	return "{\"request\":\"getCard\"}";
+}

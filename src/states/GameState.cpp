@@ -110,9 +110,19 @@ void GameState::event(sf::Event event){
 	else{
 		curentCard = -1;
 	}
-	if(clicked&&curentCard!=-1){
-		Card *card = cards[curentCard];
-		ConnectionManager::getInst()->send(JsonManager::sendCard(card));
+	if(clicked){
+		if(curentCard!=-1){
+			Card *card = cards[curentCard];
+			ConnectionManager::getInst()->send(JsonManager::sendCard(card));
+		}
+		else{
+			const int verticalPadding = VideoManager::height/2 - Card::realHeight/2;
+			const int horizontalPadding = (VideoManager::width - Card::realWidth*2)/2;
+			if(y>verticalPadding&&y<=verticalPadding+Card::realHeight&&x>horizontalPadding&&x<=horizontalPadding+Card::realWidth){
+				cout<<"getCard"<<endl;
+				ConnectionManager::getInst()->send(JsonManager::getCard());
+			}
+		}
 	}
 }
 

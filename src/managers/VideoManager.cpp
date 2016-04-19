@@ -36,6 +36,10 @@ VideoManager::VideoManager(){
 
 Sprite VideoManager::getCardSprite(Card *card){
 	Sprite cardSprite;
+	if(card==NULL){
+		cout<<"NULL card!!!"<<endl;
+		return cardSprite;
+	}
 		
 	if(card->getColor()=="back"){
 		cardSprite.setTexture(cardBackTexture);
@@ -86,6 +90,10 @@ void VideoManager::drawMessage(string msg){
 }
 
 void VideoManager::drawCard(Card* card, int x, int y){
+	if(card==NULL){
+		cout<<"NULL card!!!"<<endl;
+		return;
+	}
 	Sprite cardSprite = getCardSprite(card);
 	cardSprite.setPosition(x, y);		
 	window.draw(cardSprite);

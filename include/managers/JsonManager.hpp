@@ -9,5 +9,6 @@
 		// static JsonManager *getInst();
 		static std::string sendCard(Card*);
 		static std::string getConnectionString(std::string);
+		static std::string getCard();
 	};
 #endif

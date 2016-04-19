@@ -19,7 +19,7 @@ void InputState::tick(int){
 void InputState::event(Event event){
 	if(event.type==Event::TextEntered){
 		if(event.text.unicode==8){
-			nickname.pop_back();
+			if(nickname.size())nickname.pop_back();
 		}
 		else if(event.text.unicode==13){
 			StateManager::getInst()->push(new ConnectionState(nickname));
