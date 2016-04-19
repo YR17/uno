@@ -12,7 +12,7 @@
 		void pop();
 		void clear();
 		void draw();
-		void event(int, int, bool);
+		void event(sf::Event);
 		void tick(int);
 		bool isExit();
 	};

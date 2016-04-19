@@ -15,7 +15,7 @@
 	public:
 		GameState(std::string);
 		void addPlayer(std::string, int);
-		void event(int, int, bool);
+		void event(sf::Event);
 		void draw();
 		void tick(int);
 	};

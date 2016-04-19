@@ -17,6 +17,6 @@
 		RoomState(std::string);
 		void tick(int);
 		void draw();
-		void event(int, int, bool);
+		void event(sf::Event);
 	};
 #endif

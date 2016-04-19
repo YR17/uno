@@ -50,6 +50,6 @@ void RoomState::tick(int elapsedTime){
 	}
 }
 
-void RoomState::event(int x, int y, bool clicked){
+void RoomState::event(sf::Event){
 	
 }

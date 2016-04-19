@@ -20,15 +20,9 @@ void EventManager::eventHandle(){
 				StateManager::getInst()->clear();
 				return;
 			}break;
-			case sf::Event::MouseMoved:{
-				StateManager::getInst()->event(event.mouseMove.x, event.mouseMove.y, 0);//Send coordinates
-			}break;
-			case sf::Event::MouseButtonReleased:{
-				if(event.mouseButton.button == sf::Mouse::Left){
-					StateManager::getInst()->event(event.mouseButton.x, event.mouseButton.y, 1);
-				}
-			}
-			break;
+			default:
+				StateManager::getInst()->event(event);
+			
 		}
 	}
 }

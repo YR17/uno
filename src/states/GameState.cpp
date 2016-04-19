@@ -74,7 +74,22 @@ void GameState::addPlayer(string name, int cardsNumber){
 	players[name] = cardsNumber;
 }
 
-void GameState::event(int x, int y, bool clicked){
+void GameState::event(sf::Event event){
+	int x = 0;
+	int y = 0;
+	bool clicked = false;
+	if(event.type==sf::Event::MouseMoved){
+		x = event.mouseMove.x;
+		y = event.mouseMove.y;
+	}
+	else if(event.type==sf::Event::MouseButtonReleased){
+		if(event.mouseButton.button == sf::Mouse::Left){
+			x = event.mouseButton.x;
+			y = event.mouseButton.y;
+			clicked = true;
+		}
+	}
+
 	if(y>VideoManager::height - Card::height*Card::scale){
 		int numberOfCards = cards.size();
 		if(numberOfCards*Card::scale*Card::width>VideoManager::width){

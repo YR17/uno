@@ -29,8 +29,8 @@ void StateManager::draw(){
 	if(states.size())states.top()->draw();
 }
 
-void StateManager::event(int x, int y, bool clicked){
-	if(states.size())states.top()->event(x, y, clicked);
+void StateManager::event(sf::Event event){
+	if(states.size())states.top()->event(event);
 }
 
 void StateManager::tick(int elapsedTime){
