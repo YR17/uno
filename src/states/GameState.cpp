@@ -64,7 +64,8 @@ void GameState::drawDeck(){
 
 GameState::GameState(string jsonString){
 	backCard = new Card("back", 0);
-	// topCard = new Card("back", 0);
+	topCard = new Card("back", 0);
+	curentCard = -1;
 	update(jsonString);
 	cout<<"GameState"<<endl;
 }
