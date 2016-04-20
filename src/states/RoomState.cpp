@@ -1,5 +1,6 @@
 #include <states/RoomState.hpp>
 #include <states/GameState.hpp>
+#include <states/ConnectionState.hpp>
 #include <managers/StateManager.hpp>
 #include <iostream>
 using namespace std;
@@ -23,6 +24,10 @@ void RoomState::draw(){
 }
 
 void RoomState::tick(int elapsedTime){
+	if(!ConnectionManager::getInst()->isConnected()){
+		StateManager::getInst()->clear();
+		StateManager::getInst()->push(new ConnectionState(nickname));
+	}
 	if(ConnectionManager::getInst()->isReceived()){
 		Value json;
 		string response = ConnectionManager::getInst()->getLastMessage();

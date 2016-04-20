@@ -6,13 +6,13 @@
 	class ConnectionManager{
 		static ConnectionManager *pInstance;
 		sf::TcpSocket socket;
-		std::queue<std::string> messages;
+		std::queue<std::string> receivedMessages;
+		std::queue<std::string> messagesToSend;
 		ConnectionManager();
 		sf::Thread sendThread;
 		void sendData();
 		sf::TcpSocket::Status connect();
-		std::string message;
-		bool isSending;
+		void disconnect();
 	public:
 		static ConnectionManager *getInst();
 		void send(std::string);

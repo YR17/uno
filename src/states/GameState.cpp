@@ -1,5 +1,7 @@
 #include <states/GameState.hpp>
+#include <states/ConnectionState.hpp>
 #include <managers/ConnectionManager.hpp>
+#include <managers/StateManager.hpp>
 #include <managers/VideoManager.hpp>
 #include <managers/JsonManager.hpp>
 #include <json/json.h>
@@ -113,6 +115,7 @@ void GameState::event(sf::Event event){
 	if(clicked){
 		if(curentCard!=-1){
 			Card *card = cards[curentCard];
+			if(card->getValue()>12)card->setColor("red");
 			ConnectionManager::getInst()->send(JsonManager::sendCard(card));
 		}
 		else{
@@ -132,6 +135,10 @@ void GameState::draw(){
 }
 
 void GameState::tick(int elapsedTime){
+	if(!ConnectionManager::getInst()->isConnected()){
+		StateManager::getInst()->clear();
+		StateManager::getInst()->push(new ConnectionState(nickname));
+	}
 	if(ConnectionManager::getInst()->isReceived()){
 		Json::Reader reader;
 		Json::Value json;

@@ -1,6 +1,10 @@
 #include <managers/StateManager.hpp>
 #include <cstddef>
 
+#include <iostream>
+using namespace std;
+
+
 StateManager *StateManager::pInstance = 0;
 
 StateManager *StateManager::getInst(){
@@ -19,24 +23,24 @@ void StateManager::pop(){
 }
 
 void StateManager::clear(){
-	while(states.size()){
+	while(!states.empty()){
 		delete states.top();
 		states.pop();
 	}
 }
 
 void StateManager::draw(){
-	if(states.size())states.top()->draw();
+	if(!states.empty())states.top()->draw();
 }
 
 void StateManager::event(sf::Event event){
-	if(states.size())states.top()->event(event);
+	if(!states.empty())states.top()->event(event);
 }
 
 void StateManager::tick(int elapsedTime){
-	if(states.size())states.top()->tick(elapsedTime);
+	if(!states.empty())states.top()->tick(elapsedTime);
 }
 
 bool StateManager::isExit(){
-	return !states.size();
+	return states.empty();
 }

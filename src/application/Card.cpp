@@ -19,3 +19,7 @@ string Card::getColor(){
 int Card::getValue(){
 	return value;
 }
+
+void Card::setColor(string color){
+	this->color = color;
+}

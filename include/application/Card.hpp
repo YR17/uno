@@ -14,5 +14,6 @@
 		Card(std::string, int);
 		std::string getColor();
 		int getValue();
+		void setColor(std::string);
 	};
 #endif

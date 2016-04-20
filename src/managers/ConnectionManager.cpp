@@ -1,4 +1,6 @@
 #include <managers/ConnectionManager.hpp>
+// #include <managers/StateManager.hpp>
+// #include <states/InputState.hpp>
 #include <iostream>
 using namespace std;
 using namespace sf;
@@ -11,20 +13,35 @@ ConnectionManager *ConnectionManager::getInst(){
 }
 
 ConnectionManager::ConnectionManager():sendThread(&ConnectionManager::sendData, this){
-	isSending = false;
 	socket.setBlocking(false);
 }
 
 TcpSocket::Status ConnectionManager::connect(){
-	socket.connect("188.231.133.15", 10060);
+	return socket.connect("127.0.0.1", 10060);
 	//188.231.133.15
+}
+
+void ConnectionManager::disconnect(){
+	socket.disconnect();
+	connect();
+	// StateManager::getInst()->clear();
+	// StateManager::getInst()->push(new InputState());
 }
 
 void ConnectionManager::sendData(){
 	socket.setBlocking(true);
-	while(socket.send(message.c_str(), sizeof(char)*message.size())!=Socket::Done){};
-	isSending = false;
+	string message = messagesToSend.front();
+	message+="\r\n";
+	messagesToSend.pop();
+	auto result = socket.send(message.c_str(), sizeof(char)*message.size());
 	socket.setBlocking(false);
+	if(result==Socket::Disconnected){
+		disconnect();
+	}
+	else if(result==Socket::Partial||result==Socket::Error){
+		messagesToSend.push(message);
+		sendThread.launch();
+	}
 }
 
 bool ConnectionManager::isConnected(){
@@ -32,21 +49,21 @@ bool ConnectionManager::isConnected(){
 }
 
 bool ConnectionManager::isReceived(){
-	return messages.size()!=0;
+	return receivedMessages.size()!=0;
 }
 
 void ConnectionManager::send(string msg){
-	if(isSending)return;
-	isSending = true;
-	this->message = msg + "\r\n";
+	messagesToSend.push(msg);
 	sendThread.launch();
 }
 
 void ConnectionManager::receive(){
 	char msg[4096];
 	size_t s = 0;
-	if(socket.receive(msg, 4096, s)==Socket::Done){
+	auto status = socket.receive(msg, 4096, s);
+	if(status==Socket::Done){
 		string message(msg);
+		cout<<"Received: "<<msg<<endl;
 		string::iterator first;
 		string::iterator last;
 		int bracketCounter = 0;
@@ -57,23 +74,25 @@ void ConnectionManager::receive(){
 			if(*i=='}')bracketCounter--;
 			if(*i=='}'&&!bracketCounter){
 				last = i+1;
-				messages.push(string(first, last));
+				receivedMessages.push(string(first, last));
 			}
 			i++;
 		}
 	}
+	else if(status==Socket::Disconnected)disconnect();
 }
 
 string ConnectionManager::getLastMessage(){
-	if(messages.size()>0){
-		string result = messages.front();
+	if(receivedMessages.size()>0){
+		string result = receivedMessages.front();
 		// cout<<"lastMessage: "<<result<<"stack size: "<<messages.size()<<endl;
 		// for(auto &ch:result){
 		// 	cout<<ch<<'\t'<<(int)ch<<endl;
 		// }
-		messages.pop();
+		receivedMessages.pop();
 		cout<<result<<endl;
 		return result;
 	}
+	else return string();
 	// return ")))))000)))(((";
 }
