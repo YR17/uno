@@ -4,6 +4,7 @@
 	#include <application/Card.hpp>
 	#include <string>
 	#include <vector>
+	enum Position{LEFT_TOP, TOP, RIGHT_TOP, CENTER};
 	class VideoManager{
 		VideoManager();
 		static VideoManager *pInstance;
@@ -19,7 +20,7 @@
 		static const int height = 420;
 		static VideoManager *getInst();
 		void drawBackground();
-		void drawMessage(std::string);
+		void drawMessage(std::string, Position=CENTER);
 		void drawCard(Card *, int, int);
 		sf::RenderWindow *getWindow();
 		void clear();

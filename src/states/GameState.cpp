@@ -6,6 +6,10 @@
 #include <managers/JsonManager.hpp>
 #include <json/json.h>
 #include <iostream>
+
+#include <sstream>
+#include <iomanip>
+
 using namespace std;
 using namespace sf;
 
@@ -14,7 +18,8 @@ void GameState::update(std::string jsonString){
 	Json::Reader reader;
 	Json::Value json;
 	if(reader.parse(jsonString.c_str(), json)){
-		if(json["mover"].asString()==nickname)isCurentMover=true;
+		mover = json["mover"].asString();
+		if(mover==nickname)isCurentMover=true;
 		else isCurentMover = false;
 		delete topCard;
 		topCard = new Card(json["topCard"]["color"].asString(), json["topCard"]["value"].asInt());
@@ -24,24 +29,33 @@ void GameState::update(std::string jsonString){
 			cards.push_back(new Card(json["cards"][c]["color"].asString(), json["cards"][c]["value"].asInt()));
 		}
 
-		// players.clear();
-		// for(int c=0;c<json["players"].size();c++){
-		// 	players[json["players"][c]["name"].asString()] = json["players"][c]["cardsNumber"].asInt();
-		// }
+		players.clear();
+		for(int c=0;c<json["players"].size();c++){
+			players.push_back(pair<string, int>(json["players"][c]["name"].asString(), json["players"][c]["cardsNumber"].asInt()));
+		}
 	}
 	else cout<<"error"<<endl;
+}
+
+void GameState::drawPlayers(){
+	string playersString;
+	ostringstream oss(playersString);
+	for(auto &player:players){
+		oss<<setw(20)<<left<<player.first<<setw(3)<<right<<player.second;
+		if(player.first==mover)oss<<'<';
+		oss<<endl;
+	}
+	VideoManager::getInst()->drawMessage(oss.str(), LEFT_TOP);
 }
 
 void GameState::drawDeck(){
 	for(int c=0;c<cards.size();c++){
 		Card *card = cards[c];
-		//Create sprite for each card in deck
 		int x = 0;
 		int y = -10;
 		
 		if(curentCard==c)
 			y-=30;
-		//Draw generated sprite
 
 		int horizontalPadding;
 		int verticalPadding = VideoManager::height - Card::realHeight;
@@ -74,10 +88,6 @@ GameState::GameState(string jsonString, string nickname){
 	this->nickname = nickname;
 	update(jsonString);
 	cout<<"GameState"<<endl;
-}
-
-void GameState::addPlayer(string name, int cardsNumber){
-	players[name] = cardsNumber;
 }
 
 void GameState::event(sf::Event event){
@@ -131,7 +141,8 @@ void GameState::event(sf::Event event){
 
 void GameState::draw(){
 	drawDeck();
-	if(isCurentMover)VideoManager::getInst()->drawMessage("Your turn");
+	if(isCurentMover)VideoManager::getInst()->drawMessage("Your turn", TOP);
+	drawPlayers();
 }
 
 void GameState::tick(int elapsedTime){

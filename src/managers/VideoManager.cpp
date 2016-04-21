@@ -76,16 +76,37 @@ sf::RenderWindow *VideoManager::getWindow(){
 	return &window;
 }
 
-void VideoManager::drawMessage(string msg){
+void VideoManager::drawMessage(string msg, Position position){
 	Text text;
 	text.setFont(font);
 	text.setColor(sf::Color::Blue);
 	text.setString(msg);
 	text.setCharacterSize(40);
-	int x = window.getSize().x;
-	int y = window.getSize().y;
-	text.setPosition(x/2, y/2);
-	text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height/2);
+	int x = 0;
+	int y = 0;
+	switch(position){
+		case CENTER:{
+			x = window.getSize().x/2 - text.getLocalBounds().width/2;
+			y = window.getSize().y/2 - text.getLocalBounds().height/2;
+		}
+		break;
+		case LEFT_TOP:{
+			x = 10;
+			y = 10;
+		}
+		break;
+		case RIGHT_TOP:{
+			x = width - 10 - text.getLocalBounds().width;
+			y = 10;
+		}
+		break;
+		case TOP:{
+			x = width - 10 - text.getLocalBounds().width;
+			y = 10;
+		}
+		break;
+	}
+	text.setPosition(x, y);
 	window.draw(text);
 }
 
