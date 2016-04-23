@@ -116,7 +116,7 @@ void VideoManager::drawCard(Card* card, int x, int y){
 		return;
 	}
 	Sprite cardSprite = getCardSprite(card);
-	cardSprite.setPosition(x, y);		
+	cardSprite.setPosition(x, y);
 	window.draw(cardSprite);
 }
 

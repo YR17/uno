@@ -13,6 +13,25 @@
 using namespace std;
 using namespace sf;
 
+Card *GameState::getCardByPosition(int x, int y){
+	if(y>VideoManager::height - Card::height*Card::scale){
+		int numberOfCards = cards.size();
+		if(numberOfCards*Card::realWidth>VideoManager::width){
+			int cardWidth = VideoManager::width / numberOfCards;
+			if(x/cardWidth<=cards.size()-1&&x/cardWidth>=0)return cards[x/cardWidth];
+		}
+		else{
+			int padding = (VideoManager::width - numberOfCards * Card::realWidth)/2;
+			if(x>padding&&x<VideoManager::width-padding){
+				if((x-padding)/Card::realWidth<=cards.size()-1&&(x-padding)/Card::realWidth>=0)return cards[(x-padding)/Card::realWidth];
+			}
+		}
+	}
+	else{
+		return NULL;
+	}
+}
+
 void GameState::update(std::string jsonString){
 	// cout<<jsonString<<"accepted"<<endl;
 	Json::Reader reader;
@@ -26,7 +45,9 @@ void GameState::update(std::string jsonString){
 		for(auto &card:cards)delete card;
 		cards.clear();
 		for(int c=0;c<json["cards"].size();c++){
-			cards.push_back(new Card(json["cards"][c]["color"].asString(), json["cards"][c]["value"].asInt()));
+			Card *card = new Card(json["cards"][c]["color"].asString(), json["cards"][c]["value"].asInt());
+			if(card->getValue()>12)card->setColor(colorRing.getCurent());
+			cards.push_back(card);
 		}
 
 		players.clear();
@@ -54,7 +75,7 @@ void GameState::drawDeck(){
 		int x = 0;
 		int y = -10;
 		
-		if(curentCard==c)
+		if(curentCard==card)
 			y-=30;
 
 		int horizontalPadding;
@@ -81,20 +102,24 @@ void GameState::drawDeck(){
 }
 
 GameState::GameState(string jsonString, string nickname){
+	colorRing.add("yellow");
+	colorRing.add("red");
+	colorRing.add("blue");
+	colorRing.add("green");
 	backCard = new Card("back", 0);
 	topCard = new Card("back", 0);
-	curentCard = -1;
+	curentCard = NULL;
 	isCurentMover = false;
 	this->nickname = nickname;
 	update(jsonString);
 	cout<<"GameState"<<endl;
 }
 
-void GameState::event(sf::Event event){
+void GameState::event(Event event){
 	int x = 0;
 	int y = 0;
 	bool clicked = false;
-	if(event.type==sf::Event::MouseMoved){
+	if(event.type==Event::MouseMoved){
 		x = event.mouseMove.x;
 		y = event.mouseMove.y;
 	}
@@ -105,28 +130,27 @@ void GameState::event(sf::Event event){
 			clicked = true;
 		}
 	}
-
-	if(y>VideoManager::height - Card::height*Card::scale){
-		int numberOfCards = cards.size();
-		if(numberOfCards*Card::realWidth>VideoManager::width){
-			int cardWidth = VideoManager::width / numberOfCards;
-			if(x/cardWidth<=cards.size()-1&&x/cardWidth>=0)curentCard = x/cardWidth;
-		}
-		else{
-			int padding = (VideoManager::width - numberOfCards * Card::realWidth)/2;
-			if(x>padding&&x<VideoManager::width-padding){
-				if((x-padding)/Card::realWidth<=cards.size()-1&&(x-padding)/Card::realWidth>=0)curentCard = (x-padding)/Card::realWidth;
+	else if(event.type==Event::MouseWheelScrolled){
+		if(event.mouseWheelScroll.wheel==Mouse::VerticalWheel){
+			if(event.mouseWheelScroll.delta>0){
+				colorRing.getNext();
+			}
+			else {
+				colorRing.getPrevious();
+			}
+			for(auto &card:cards){
+				if(card->getValue()>12)card->setColor(colorRing.getCurent());
 			}
 		}
 	}
-	else{
-		curentCard = -1;
-	}
+
+	curentCard = getCardByPosition(x, y);
+
 	if(clicked){
-		if(curentCard!=-1){
-			Card *card = cards[curentCard];
-			if(card->getValue()>12)card->setColor("red");
-			ConnectionManager::getInst()->send(JsonManager::sendCard(card));
+		if(curentCard!=NULL){
+			// Card *card = cards[curentCard];
+			// if(card->getValue()>12)card->setColor("red");
+			ConnectionManager::getInst()->send(JsonManager::sendCard(curentCard));
 		}
 		else{
 			const int verticalPadding = VideoManager::height/2 - Card::realHeight/2;

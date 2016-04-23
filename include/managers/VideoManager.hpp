@@ -15,6 +15,7 @@
 		sf::Sprite background;
 		sf::Font font;
 		sf::Sprite getCardSprite(Card *);
+		Card *getCardByPosition(int, int);
 	public:
 		static const int width = 640;
 		static const int height = 420;

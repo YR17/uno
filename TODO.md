@@ -1,3 +1,1 @@
-- Make JSON Generation
-- Refract ConnectionManager, error handling
 - Write Destructors, socket.disconnect(), window.close(), window.destroy()
