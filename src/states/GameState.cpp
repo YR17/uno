@@ -1,5 +1,6 @@
 #include <states/GameState.hpp>
 #include <states/ConnectionState.hpp>
+#include <states/EndState.hpp>
 #include <managers/ConnectionManager.hpp>
 #include <managers/StateManager.hpp>
 #include <managers/VideoManager.hpp>
@@ -37,22 +38,27 @@ void GameState::update(std::string jsonString){
 	Json::Reader reader;
 	Json::Value json;
 	if(reader.parse(jsonString.c_str(), json)){
-		mover = json["mover"].asString();
-		if(mover==nickname)isCurentMover=true;
-		else isCurentMover = false;
-		delete topCard;
-		topCard = new Card(json["topCard"]["color"].asString(), json["topCard"]["value"].asInt());
-		for(auto &card:cards)delete card;
-		cards.clear();
-		for(int c=0;c<json["cards"].size();c++){
-			Card *card = new Card(json["cards"][c]["color"].asString(), json["cards"][c]["value"].asInt());
-			if(card->getValue()>12)card->setColor(colorRing.getCurent());
-			cards.push_back(card);
+		if(json["state"].asString()=="endGame"){
+			StateManager::getInst()->push(new EndState(json.toStyledString()));
 		}
+		else{	
+			mover = json["mover"].asString();
+			if(mover==nickname)isCurentMover=true;
+			else isCurentMover = false;
+			delete topCard;
+			topCard = new Card(json["topCard"]["color"].asString(), json["topCard"]["value"].asInt());
+			for(auto &card:cards)delete card;
+			cards.clear();
+			for(int c=0;c<json["cards"].size();c++){
+				Card *card = new Card(json["cards"][c]["color"].asString(), json["cards"][c]["value"].asInt());
+				if(card->getValue()>12)card->setColor(colorRing.getCurent());
+				cards.push_back(card);
+			}
 
-		players.clear();
-		for(int c=0;c<json["players"].size();c++){
-			players.push_back(pair<string, int>(json["players"][c]["name"].asString(), json["players"][c]["cardsNumber"].asInt()));
+			players.clear();
+			for(int c=0;c<json["players"].size();c++){
+				players.push_back(pair<string, int>(json["players"][c]["name"].asString(), json["players"][c]["cardsNumber"].asInt()));
+			}
 		}
 	}
 	else cout<<"error"<<endl;

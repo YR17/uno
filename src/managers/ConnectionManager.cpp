@@ -17,7 +17,7 @@ ConnectionManager::ConnectionManager():sendThread(&ConnectionManager::sendData, 
 }
 
 TcpSocket::Status ConnectionManager::connect(){
-	return socket.connect("127.0.0.1", 10060);
+	return socket.connect("188.231.133.15", 10060);
 	//188.231.133.15 Trach
 	//109.86.69.207 YR17
 }
